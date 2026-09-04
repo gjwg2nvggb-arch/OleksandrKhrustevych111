@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Олександр Хрустевич | Музикант</title>
+  <style>
+    :root {
+      --cream: #f2eee8;
+      --muted: #c5c0ba;
+      --wine: #650d12;
+      --wine-light: #a32a2c;
+      --dark: #080808;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--cream);
+      background: var(--dark);
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      min-height: 100vh;
+      background-image: linear-gradient(90deg, rgba(3, 3, 3, 0.7), rgba(3, 3, 3, 0.18) 52%, rgba(3, 3, 3, 0.56));
+      background-position: center;
+      background-size: cover;
+    }
+
+    .hero::before {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      content: '';
+      background: url('2.png') center / cover;
+      transform: scaleX(-1);
+    }
+
+    .hero::after {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      content: '';
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 48%, rgba(0, 0, 0, 0.16));
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      width: min(100% - 64px, 1250px);
+      margin: 0 auto;
+    }
+
+    .language-switch {
+      position: fixed;
+      top: 24px;
+      left: clamp(18px, 3vw, 42px);
+      z-index: 20;
+      display: flex;
+      gap: 6px;
+    }
+
+    .language-switch button {
+      min-width: 30px;
+      padding: 5px 7px;
+      border: 1px solid rgba(242, 238, 232, 0.55);
+      color: var(--cream);
+      background: rgba(0, 0, 0, 0.28);
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .language-switch button.active {
+      color: var(--dark);
+      background: var(--cream);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding-top: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--cream);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-decoration: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .navigation {
+      position: fixed;
+      top: 24px;
+      right: clamp(18px, 3vw, 42px);
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      width: 390px;
+    }
+
+    .mobile-menu-shell { display: contents; }
+
+    .navigation-decoration {
+      position: fixed;
+      top: 48px;
+      right: clamp(18px, 3vw, 42px);
+      z-index: 20;
+      width: min(100% - 36px, 390px);
+      height: auto;
+    }
+
+    .social-icons-group {
+      position: fixed;
+      top: 76px;
+      right: clamp(18px, 3vw, 42px);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      width: min(100% - 36px, 310px);
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+
+    .social-link:hover,
+    .social-link:focus-visible {
+      transform: translateY(-2px);
+      opacity: 0.85;
+    }
+
+    .social-icon {
+      width: 22px;
+      height: auto;
+      display: block;
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+
+    .social-link:hover .social-icon,
+    .social-link:focus-visible .social-icon {
+      transform: translateY(-2px) scale(1.08);
+      opacity: 0.85;
+    }
+
+    .navigation a,
+    .cta {
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .navigation a {
+      color: var(--cream);
+      font-size: 11px;
+      transition: color 180ms ease;
+    }
+
+    .navigation a:hover,
+    .navigation a:focus-visible { color: #e9a5a2; }
+
+    .menu-toggle,
+    .visually-hidden { display: none; }
+
+    .cta {
+      padding: 13px 19px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--cream);
+      background: var(--wine);
+      font-size: 10px;
+      transition: background 180ms ease, transform 180ms ease;
+    }
+
+    .cta:hover,
+    .cta:focus-visible {
+      background: var(--wine-light);
+      transform: translateY(-2px);
+    }
+
+    .hero-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 8vh;
+    }
+
+    .hero-logo {
+      display: block;
+      width: min(100%, 600px);
+      height: auto;
+    }
+
+    .hero-gradient {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      z-index: 0;
+      width: 100vw;
+      transform: translateX(-50%);
+    }
+
+    .hero-top-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      display: block;
+      width: 100vw;
+      height: auto;
+      transform: rotate(180deg);
+    }
+
+    .about {
+      position: relative;
+      overflow: visible;
+      min-height: 72vh;
+      padding: 100px 0;
+      background: linear-gradient(120deg, rgba(18, 6, 7, 0.94), rgba(44, 11, 12, 0.82) 52%, rgba(8, 8, 8, 0.92));
+    }
+
+    .about::before {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      content: '';
+      background: linear-gradient(120deg, rgba(18, 6, 7, 0.94), rgba(44, 11, 12, 0.82) 52%, rgba(8, 8, 8, 0.92)), url('ChatGPT Image 28 серп. 2026 р., 11_23_45.png') center / cover;
+      transform: scaleX(-1);
+    }
+
+    .about-title-image {
+      position: absolute;
+      top: 18px;
+      left: 24px;
+      z-index: 2;
+      width: min(225px, calc(100% - 36px));
+      height: auto;
+    }
+
+    .contacts-title-image {
+      position: absolute;
+      top: 18px;
+      left: 24px;
+      z-index: 2;
+      width: min(225px, calc(100% - 36px));
+      height: auto;
+    }
+
+    .about-top-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: auto;
+      transform: rotate(180deg);
+    }
+
+    .about-bottom-gradient {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .about-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 9vw;
+      align-items: start;
+    }
+
+    .about-titles-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .about h2 {
+      margin: 0;
+      font-size: clamp(2.4rem, 5vw, 5.2rem);
+      font-weight: 400;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .about h2 span { color: #aa5653; }
+
+    .about-subtitles {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .about-subtitle-item {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: #e3b0a8;
+      text-transform: uppercase;
+    }
+
+    /* Галерея у стовпчик у їх природному (орігінальному) розмірі */
+    .about-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 12px;
+      align-items: flex-start;
+    }
+
+    .about-gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid rgba(242, 238, 232, 0.15);
+      background: rgba(20, 10, 11, 0.8);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: transform 350ms cubic-bezier(0.25, 1, 0.5, 1), border-color 350ms ease;
+    }
+
+    .about-gallery-item:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: rgba(170, 86, 83, 0.6);
+    }
+
+    .about-gallery-img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      display: block;
+      transition: transform 400ms ease;
+    }
+
+    .about-gallery-item:hover .about-gallery-img {
+      transform: scale(1.03);
+    }
+
+    .about-copy {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .about-copy p { margin: 0 0 18px; }
+
+    .about-copy ul {
+      margin: 0 0 18px 20px;
+      padding: 0;
+      color: var(--muted);
+    }
+
+    .about-copy li {
+      margin-bottom: 6px;
+    }
+
+    .contacts {
+      position: relative;
+      display: flex;
+      min-height: 72vh;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(120deg, #080808, #26090b 58%, #080808);
+      padding: 120px 0;
+    }
+
+    .contacts::before {
+      position: absolute;
+      inset: 0;
+      content: '';
+      background: url('3.png') center / cover;
+      opacity: 0.28;
+    }
+
+    .contacts-top-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: auto;
+      transform: rotate(180deg);
+    }
+
+    .contacts-bottom-gradient {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .contacts-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 9vw;
+      align-items: start;
+    }
+
+    .contacts h2 {
+      margin: 0;
+      font-size: clamp(2.4rem, 5vw, 5.2rem);
+      font-weight: 400;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .contacts h2 span { color: #aa5653; }
+
+    .contacts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 560px;
+    }
+
+    .contact-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(242, 238, 232, 0.2);
+    }
+
+    .contact-block:last-child {
+      border-bottom: none;
+    }
+
+    .contacts-list a {
+      color: var(--cream);
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+
+    .contacts-list a:hover,
+    .contacts-list a:focus-visible { color: #e9a5a2; }
+
+    .contact-email {
+      color: var(--cream) !important;
+      font-family: Arial, sans-serif !important;
+      font-size: 16px !important;
+      letter-spacing: 0.12em !important;
+      text-decoration: none !important;
+      text-transform: none !important;
+    }
+
+    .festival-logo-link {
+      display: inline-block;
+      width: 180px;
+      margin-bottom: 8px;
+    }
+
+    .festival-logo-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+
+    .festival-logo-link:hover .festival-logo-img {
+      transform: translateY(-2px);
+      opacity: 0.85;
+    }
+
+    .festival-text {
+      font-family: Georgia, serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+      margin: 0;
+      white-space: pre-line;
+    }
+
+    .email-note {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: #aa5653;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 760px) {
+      .container { width: min(100% - 36px, 1250px); }
+      .navigation {
+        display: none;
+        position: static;
+        width: auto;
+        padding: 46px 18px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .navigation.is-open {
+        display: flex;
+      }
+      .navigation a {
+        min-width: 0;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+      }
+      .menu-toggle {
+        position: fixed;
+        top: 18px;
+        right: 12px;
+        z-index: 23;
+        display: flex;
+        width: 38px;
+        height: 34px;
+        padding: 7px;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid rgba(242, 238, 232, 0.55);
+        color: var(--cream);
+        background: rgba(0, 0, 0, 0.35);
+        cursor: pointer;
+      }
+      .mobile-menu-shell {
+        position: fixed;
+        top: 18px;
+        right: 12px;
+        z-index: 22;
+        display: block;
+        width: min(280px, calc(100vw - 72px));
+        pointer-events: none;
+      }
+      .mobile-menu-shell.is-open {
+        pointer-events: auto;
+        border: 1px solid rgba(242, 238, 232, 0.25);
+        background: rgba(8, 8, 8, 0.96);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(10px);
+      }
+      .mobile-menu-shell .navigation-decoration,
+      .mobile-menu-shell .social-icons-group { display: none; }
+      .mobile-menu-shell.is-open .navigation-decoration {
+        position: static;
+        display: block;
+        width: calc(100% - 36px);
+        margin: 0 18px 2px;
+      }
+      .mobile-menu-shell.is-open .social-icons-group {
+        position: static;
+        display: flex;
+        width: auto;
+        padding: 14px 18px 16px;
+        justify-content: flex-start;
+      }
+      .menu-toggle span:not(.visually-hidden) {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: currentColor;
+        transition: transform 180ms ease, opacity 180ms ease;
+      }
+      .menu-toggle.is-open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+      .menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+      .menu-toggle.is-open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .navigation-decoration {
+        top: 46px;
+        right: 12px;
+        width: calc(100% - 24px);
+      }
+      .social-icons-group {
+        top: 72px;
+        right: 12px;
+        width: calc(100% - 24px);
+      }
+      .language-switch { top: 20px; left: 12px; }
+      .language-switch button { min-width: 27px; padding: 4px 5px; }
+      .hero { min-height: 90vh; background-position: 60% center; }
+      .hero::before {
+        background-position: 35% center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transform: scaleX(-1);
+      }
+      .hero-content { padding-bottom: 5vh; }
+      .hero-logo { max-width: 100%; }
+      .about { padding: 150px 0 72px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-copy { font-size: 15px; }
+      .contacts { min-height: 80vh; padding-top: 150px; }
+      .contacts-content { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    #recordings {
+      min-height: 100vh !important;
+      padding: 160px 0 100px !important;
+      overflow: hidden;
+    }
+
+    .news-wrapper {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 1.1fr;
+      gap: 50px;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .news-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .news-decoration-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .news-scroll-container {
+      position: relative;
+      height: 220px;
+      overflow-y: auto;
+      padding-right: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      scroll-behavior: smooth;
+    }
+
+    .news-scroll-container::-webkit-scrollbar {
+      width: 4px;
+    }
+    .news-scroll-container::-webkit-scrollbar-track {
+      background: rgba(242, 238, 232, 0.05);
+      border-radius: 4px;
+    }
+    .news-scroll-container::-webkit-scrollbar-thumb {
+      background: rgba(242, 238, 232, 0.3);
+      border-radius: 4px;
+      transition: background 200ms ease;
+    }
+    .news-scroll-container::-webkit-scrollbar-thumb:hover {
+      background: var(--cream);
+    }
+
+    .news-card {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      gap: 20px;
+      background: rgba(20, 10, 11, 0.65);
+      border: 1px solid rgba(242, 238, 232, 0.12);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 350ms cubic-bezier(0.25, 1, 0.5, 1);
+      position: relative;
+    }
+
+    .news-card:hover {
+      border-color: rgba(242, 238, 232, 0.35);
+      background: rgba(35, 15, 17, 0.85);
+      transform: translateX(4px);
+    }
+
+    .news-card.active {
+      border-color: #aa5653;
+      background: rgba(50, 16, 18, 0.95);
+      box-shadow: 0 8px 32px rgba(101, 13, 18, 0.3);
+      transform: scale(1.02) translateX(6px);
+    }
+
+    .news-card-img {
+      width: 110px;
+      height: 80px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 8px;
+      flex-shrink: 0;
+      background: #222;
+      transition: transform 350ms ease;
+    }
+
+    .news-card.active .news-card-img {
+      transform: scale(1.05);
+    }
+
+    .news-card-info {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+    }
+
+    .news-card-date {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: #aa5653;
+      text-transform: uppercase;
+    }
+
+    .news-card-title {
+      min-width: 0;
+      font-family: Georgia, serif;
+      font-size: 16px;
+      line-height: 1.3;
+      color: var(--cream);
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+    }
+
+    .news-detail-panel {
+      min-width: 0;
+      overflow: hidden;
+      background: rgba(14, 7, 8, 0.85);
+      border: 1px solid rgba(242, 238, 232, 0.15);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      min-height: 400px;
+      justify-content: space-between;
+      animation: fadeIn 400ms ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 1; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .news-detail-content {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .news-detail-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 10px;
+      background: #1a1a1a;
+    }
+
+    .news-detail-date {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: #aa5653;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .news-detail-title {
+      max-width: 100%;
+      font-family: Georgia, serif;
+      font-size: 24px;
+      line-height: 1.2;
+      color: var(--cream);
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .news-detail-text {
+      max-width: 100%;
+      font-family: Georgia, serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .news-detail-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      padding: 11px 22px;
+      background: var(--wine);
+      color: var(--cream);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      text-transform: uppercase;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: background 200ms ease, transform 200ms ease;
+    }
+
+    .news-detail-link:hover {
+      background: var(--wine-light);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 900px) {
+      .news-wrapper {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .news-scroll-container {
+        height: 220px;
+      }
+    }
+
+    .concerts {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      padding: 150px 0 100px;
+      background: #080808;
+    }
+
+    .concerts::before {
+      position: absolute;
+      inset: 0;
+      content: '';
+      background: linear-gradient(120deg, rgba(8, 8, 8, 0.86), rgba(44, 11, 12, 0.68)), url('4.png') center / cover;
+    }
+
+    .videos {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      padding: 150px 0 100px;
+      background: linear-gradient(120deg, #120607, #080808 58%, #241012);
+    }
+
+    .videos-layout {
+      position: relative;
+      z-index: 2;
+    }
+
+    .videos-title-image {
+      position: absolute;
+      top: 18px;
+      left: 24px;
+      z-index: 2;
+      width: min(225px, calc(100% - 36px));
+      height: auto;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      width: min(100%, 1120px);
+      margin: 0 auto;
+    }
+
+    .video-card {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      border: 1px solid rgba(242, 238, 232, 0.24);
+      border-radius: 8px;
+      background: #000;
+      position: relative;
+    }
+
+    .video-card::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      content: '';
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-left: 28px solid var(--cream);
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.75));
+      transform: translate(-42%, -50%);
+      transition: transform 180ms ease;
+    }
+
+    .video-card:hover::after,
+    .video-card:focus-visible::after {
+      transform: translate(-42%, -50%) scale(1.15);
+    }
+
+    .video-card:focus-visible {
+      outline: 2px solid var(--cream);
+      outline-offset: 3px;
+    }
+
+    .video-thumbnail {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 260ms ease, filter 260ms ease;
+    }
+
+    .video-card:hover .video-thumbnail,
+    .video-card:focus-visible .video-thumbnail {
+      filter: brightness(0.75);
+      transform: scale(1.04);
+    }
+
+    .videos-channel-link {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .concerts-title-image {
+      position: absolute;
+      top: 18px;
+      left: 24px;
+      z-index: 2;
+      width: min(225px, calc(100% - 36px));
+      height: auto;
+    }
+
+    .concerts-layout {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 1.3fr) minmax(0, 1fr);
+      gap: clamp(18px, 2.5vw, 38px);
+      align-items: start;
+    }
+
+    .concerts-column {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .concerts-heading {
+      margin: 0 0 2px;
+      color: var(--cream);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .concerts-heading::after {
+      display: block;
+      width: 46px;
+      height: 2px;
+      margin-top: 10px;
+      content: '';
+      background: #aa5653;
+    }
+
+    .concerts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      height: 390px;
+      overflow-y: auto;
+      padding: 2px 10px 2px 2px;
+      scrollbar-color: rgba(170, 86, 83, 0.8) rgba(242, 238, 232, 0.1);
+      scrollbar-width: thin;
+    }
+
+    .concerts-list::-webkit-scrollbar { width: 5px; }
+    .concerts-list::-webkit-scrollbar-track { background: rgba(242, 238, 232, 0.08); }
+    .concerts-list::-webkit-scrollbar-thumb { background: rgba(170, 86, 83, 0.8); }
+
+    .concert-card {
+      display: grid;
+      grid-template-columns: 66px minmax(0, 1fr);
+      gap: 13px;
+      align-items: center;
+      width: 100%;
+      min-height: 82px;
+      padding: 8px;
+      border: 1px solid rgba(242, 238, 232, 0.16);
+      border-radius: 8px;
+      color: var(--cream);
+      background: rgba(14, 7, 8, 0.74);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 16px;
+      text-align: left;
+      cursor: pointer;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .concert-card-img {
+      width: 66px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 5px;
+      filter: saturate(0.82);
+    }
+
+    .concert-card-copy {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .concert-card-date {
+      color: #c98681;
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .concert-card-title {
+      overflow: hidden;
+      color: var(--cream);
+      font-size: 15px;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .past-concert-card {
+      display: block;
+      min-height: 96px;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    .past-concert-card .concert-card-copy { gap: 8px; }
+
+    .past-concert-card .concert-card-title {
+      overflow: visible;
+      font-size: 16px;
+      text-overflow: clip;
+      white-space: normal;
+    }
+
+    .past-concert-description {
+      display: -webkit-box;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      max-height: 2.8em;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .concert-card:hover,
+    .concert-card:focus-visible,
+    .concert-card.active {
+      border-color: #aa5653;
+      background: rgba(50, 16, 18, 0.94);
+      transform: translateX(4px);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.26);
+    }
+
+    .concert-card:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
+
+    .concert-detail-panel {
+      min-height: 490px;
+      padding: 22px;
+      justify-content: flex-start;
+      border-color: rgba(242, 238, 232, 0.24);
+      background: rgba(12, 6, 7, 0.9);
+    }
+
+    .concert-detail-img {
+      width: 100%;
+      height: 245px;
+      object-fit: cover;
+      object-position: center;
+      border: 1px solid rgba(242, 238, 232, 0.16);
+      border-radius: 8px;
+      filter: saturate(0.85) contrast(1.05);
+    }
+
+    .concert-detail-panel .news-detail-content { gap: 15px; }
+    .concert-detail-panel .news-detail-title { font-size: clamp(1.45rem, 2vw, 2rem); }
+    .concert-detail-panel .news-detail-text { font-size: 16px; }
+
+    @media (max-width: 900px) {
+      .concerts { padding: 140px 0 72px; }
+      .concerts-layout { grid-template-columns: 1fr; }
+      .concerts-list { height: 310px; }
+      .concert-detail-panel { min-height: 300px; }
+      .concert-detail-img { height: 200px; }
+      .videos { padding: 140px 0 72px; }
+      .videos-grid { grid-template-columns: 1fr; }
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-34px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(34px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.48; }
+    }
+
+    .hero-logo { animation: riseIn 900ms 180ms both, gentleFloat 5s 1.1s ease-in-out infinite; }
+    .navigation-decoration { animation: slideInRight 700ms 180ms both; }
+    .social-icons-group { animation: slideInRight 700ms 360ms both; }
+    .language-switch { animation: slideInLeft 700ms 180ms both; }
+    .social-link { animation: riseIn 500ms both; }
+    .social-link:nth-child(1) { animation-delay: 400ms; }
+    .social-link:nth-child(2) { animation-delay: 460ms; }
+    .social-link:nth-child(3) { animation-delay: 520ms; }
+    .social-link:nth-child(4) { animation-delay: 580ms; }
+    .social-link:nth-child(5) { animation-delay: 640ms; }
+    .social-link:nth-child(6) { animation-delay: 700ms; }
+    .social-link:nth-child(7) { animation-delay: 760ms; }
+
+    .about::after,
+    .contacts::after,
+    .concerts::after {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      content: '';
+      background: linear-gradient(105deg, transparent 25%, rgba(242, 238, 232, 0.08) 50%, transparent 75%);
+      pointer-events: none;
+      animation: glowPulse 6s ease-in-out infinite;
+    }
+
+    .motion-ready .reveal-on-scroll.is-visible { opacity: 1; animation: riseIn 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .motion-ready .reveal-from-left.is-visible { opacity: 1; animation: slideInLeft 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .motion-ready .reveal-from-right.is-visible { opacity: 1; animation: slideInRight 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .motion-ready .stagger-2.is-visible { animation-delay: 120ms; }
+    .motion-ready .stagger-3.is-visible { animation-delay: 240ms; }
+
+    .news-card,
+    .concert-card,
+    .news-detail-panel { will-change: transform; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero" id="home">
+      <img class="hero-top-gradient" src="Rectangle 4 (1).png" alt="">
+      <div class="language-switch" aria-label="Вибір мови">
+        <button id="en-button" class="active" type="button">EN</button>
+        <button id="ua-button" type="button">UA</button>
+      </div>
+      <div class="container">
+        <header class="topbar">
+          <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span class="visually-hidden">Відкрити меню</span>
+          </button>
+          <div class="mobile-menu-shell">
+            <nav class="navigation" id="main-navigation" aria-label="Головна навігація">
+              <a href="#about" id="about-link">Про мене</a>
+              <a href="#contacts" id="contacts-link">Контакти</a>
+              <a href="#recordings" id="music-link">Новини</a>
+              <a href="#concerts" id="concerts-link">Концерти</a>
+              <a href="#videos" id="videos-link">Відео</a>
+            </nav>
+            <img class="navigation-decoration" src="MiniDesign1.png" alt="">
+
+            <div class="social-icons-group">
+            <a href="https://www.youtube.com/@Hrustevich" target="_blank" rel="noopener noreferrer" class="social-link">
+              <img class="social-icon" src="YouTubeIcon.png" alt="YouTube">
+            </a>
+            <a href="https://www.tiktok.com/@hrustevich" target="_blank" rel="noopener noreferrer" class="social-link">
+              <img class="social-icon" src="TikTokIcon.png" alt="TikTok">
+            </a>
+            <a href="https://itunes.apple.com/album/id/1613936663" target="_blank" rel="noopener noreferrer" class="social-link">
+              <img class="social-icon" src="MusicIcon.png" alt="Music">
+            </a>
+            <a href="https://open.spotify.com/album/6V7LOiT34e0nqXaGkjG51h" target="_blank" rel="noopener noreferrer" class="social-link">
+              <img class="social-icon" src="SpotifyIkon.png" alt="Spotify">
+            </a>
+            <a href="https://facebook.com/share/188FoynMZ8/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link">
+              <img class="social-icon" src="FaceBookIcon.png" alt="Facebook">
+            </a>
+            <a href="https://www.instagram.com/oleksandrhrustevich" target="_blank" rel="noopener noreferrer" class="social-link">
+              <img class="social-icon" src="InstagramIcon.png" alt="Instagram">
+            </a>
+            <a href="https://music.amazon.com/artists/B09TB76X8V/alexander-hrustevich" target="_blank" rel="noopener noreferrer" class="social-link">
+              <img class="social-icon" src="AmazonIcon.png" alt="Amazon">
+            </a>
+            </div>
+          </div>
+        </header>
+        <div class="hero-content">
+          <img class="hero-logo" src="LogoMenuUA.png" alt="Олександр Хрустевич" id="hero-logo">
+          <img class="hero-gradient" src="Rectangle 4 (1).png" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <img class="about-top-gradient" src="Rectangle 4 (1).png" alt="">
+      <img class="about-bottom-gradient" src="Rectangle 4 (1).png" alt="">
+      <img class="about-title-image" src="AboutMeUA.png" alt="Про мене" id="about-title-image">
+      <div class="container about-grid">
+        <div class="about-titles-wrap">
+          <h2 id="about-title">Музика, <span>що</span><br>залишається</h2>
+          <div class="about-subtitles" id="about-subtitles">
+            <span class="about-subtitle-item" id="sub-honor">Заслужений артист України</span>
+            <span class="about-subtitle-item" id="sub-laureate">Лауреат міжнародних конкурсів</span>
+          </div>
+          <div class="about-gallery">
+            <div class="about-gallery-item">
+              <img class="about-gallery-img" src="Photo01.png" alt="Олександр Хрустевич - фото 1">
+            </div>
+            <div class="about-gallery-item">
+              <img class="about-gallery-img" src="Photo02.png" alt="Олександр Хрустевич - фото 2">
+            </div>
+          </div>
+        </div>
+        <div class="about-copy" id="music">
+          <p id="bio-first">Народився 1983 року в місті Старокостянтинів Хмельницької області.</p>
+          <p id="bio-second">Музиці навчається з 6 років. Після закінчення Старокостянтинівської музичної школи (клас викладача Реца Л.Ф.) та Хмельницького музичного училища (клас викладача Голоднюка О.М.) у 2001-2006 рр. навчався у Національній музичній академії України імені П.І. Чайковського у класі професора, Народного артиста України Володимира Бесфамільнова. Під його керівництвом у 2009 році закінчив асистентуру-стажировку НМАУ імені П.І. Чайковського.</p>
+          <p id="bio-third">З 2006 року працює у Національному заслуженому академічному ансамблі танцю України імені П.П. Вірського. У 2016 році присвоєно почесне звання «Заслужений артист України».</p>
+          <p id="bio-fourth">З 2023 року працює артистом оркестру Національного заслуженого академічного українського народного хору України імені Г.Г. Верьовки.</p>
+          <p id="bio-fifth"><strong>Лауреат Міжнародних конкурсів:</strong></p>
+          <ul id="bio-list">
+            <li>«Golden Accordion» (Нью-Йорк, США 3-премія);</li>
+            <li>«Грай мій баян» (Ржев, Росія 1-премія);</li>
+            <li>«Від бароко до джазу» (Вроцлав, Польща 1-премія);</li>
+            <li>«Кубок Кривбасу» (Кривий Ріг, Україна 2-премія);</li>
+            <li>«AccoHoliday» (Київ, Україна 1-премія).</li>
+          </ul>
+          <p id="bio-sixth">Гастролював з концертами у містах: України, Польщі, Чехії, Австрії, Німеччині, Норвегії, Іспанії, Італії, Литві, Росії, Швейцарії, Бразилії, Голландії, Туреччині, Сербії, Португалії, Словаччині, Малайзії, Бельгії, Америці.</p>
+          <p id="bio-seventh">Останніми яскравими творчими досягненнями стали його виступи з Боббі МакФерріном, участь у Міжнародному фестивалі «Київські літні музичні вечори» та у Міжнародному літньому фестивалі «Нова музична генерація» (Вільнюс, Литва), у Міжнародному музичному фестивалі у Ньюпорті (США).</p>
+          <p id="bio-eighth">Широке визнання Олександр отримав після розміщення в інтернеті свого власного відео – на сьогодні його переглянуло вже більше 17 мільйонів користувачів зі всього світу.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contacts" id="contacts">
+      <img class="contacts-top-gradient" src="Rectangle 4 (1).png" alt="">
+      <img class="contacts-bottom-gradient" src="Rectangle 4 (1).png" alt="">
+      <img class="contacts-title-image" src="ContactsUA.png" alt="Контакти" id="contacts-title-image">
+      <div class="container contacts-content">
+        <h2 id="contacts-title">Будьмо <span>на</span><br>зв’язку</h2>
+        <div class="contacts-list">
+          <div class="contact-block">
+            <span class="contact-email" id="personal-email-link">hrustevich@ukr.net</span>
+            <div class="email-note" id="email-note-text">Особиста електронна пошта артиста</div>
+          </div>
+          <div class="contact-block">
+            <a href="http://www.nmgeneration.com" target="_blank" rel="noopener noreferrer" class="festival-logo-link">
+              <img class="festival-logo-img" src="LogoMusical.png" alt="New Musical Generation">
+            </a>
+            <p class="festival-text">“New Musical Generation”
+The member of the International Artist Managers Association
+L. Sapiegos 4-86, LT-10312
+Vilnius LITHUANIA
+info (at) nmgeneration.com
+Jurga Mackelaitė
+Executive Director
+Mobile ph. +370 67883737
+info (at) nmgeneration.com</p>
+            <a href="http://www.nmgeneration.com" target="_blank" rel="noopener noreferrer">www.nmgeneration.com</a>
+          </div>
+          <div class="contact-block" style="border-bottom: none;">
+            <a href="#home" id="back-home-link">На головну</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="recordings">
+      <img class="about-top-gradient" src="Rectangle 4 (1).png" alt="">
+      <img class="about-bottom-gradient" src="Rectangle 4 (1).png" alt="">
+      <img class="about-title-image" src="NewsUA.png" alt="Новини" id="recordings-title-image">
+      
+      <div class="container">
+        <div class="news-wrapper">
+          <div class="news-column">
+            <img class="news-decoration-img" src="MiniDesign1.png" alt="">
+            
+            <div class="news-scroll-container" id="news-list-container">
+              <!-- Динамічно заповнюється скриптом -->
+            </div>
+
+            <img class="news-decoration-img" src="MiniDesign1.png" alt="">
+          </div>
+
+          <div class="news-detail-panel" id="news-detail-panel">
+            <div class="news-detail-content">
+              <img class="news-detail-img" id="detail-img" src="3.png" alt="Фото новини">
+              <p class="news-detail-date" id="detail-date">1 Вересня 2026</p>
+              <h3 class="news-detail-title" id="detail-title">Новий цифровий простір артиста</h3>
+              <p class="news-detail-text" id="detail-text">Після 14 років офіційний сайт Олександра Хрустевича повністю оновився...</p>
+            </div>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="news-detail-link" id="detail-link" style="display: none;">Дізнатися більше</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="concerts" id="concerts">
+      <img class="about-top-gradient" src="Rectangle 4 (1).png" alt="">
+      <img class="about-bottom-gradient" src="Rectangle 4 (1).png" alt="">
+      <img class="concerts-title-image" src="ConcertUA.png" alt="Концерти" id="concerts-title-image">
+      <div class="container concerts-layout">
+        <div class="concerts-column">
+          <h2 class="concerts-heading" id="upcoming-concerts-heading">Майбутні концерти</h2>
+          <div class="concerts-list" id="upcoming-concerts-list"></div>
+        </div>
+
+        <div class="news-detail-panel concert-detail-panel" id="concert-detail-panel">
+          <div class="news-detail-content">
+            <img class="concert-detail-img" id="concert-detail-img" src="Photo01.png" alt="Концерт Олександра Хрустевича">
+            <p class="news-detail-date" id="concert-detail-date"></p>
+            <h3 class="news-detail-title" id="concert-detail-title"></h3>
+            <p class="news-detail-text" id="concert-detail-text"></p>
+          </div>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="news-detail-link" id="concert-detail-link" style="display: none;">Дізнатися більше</a>
+        </div>
+
+        <div class="concerts-column">
+          <h2 class="concerts-heading" id="past-concerts-heading">Минулі концерти</h2>
+          <div class="concerts-list" id="past-concerts-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="videos" id="videos">
+      <img class="about-top-gradient" src="Rectangle 4 (1).png" alt="">
+      <img class="videos-title-image" src="VideoUA.png" alt="Відео" id="videos-title-image">
+      <div class="container videos-layout">
+        <div class="videos-grid">
+          <a class="video-card" href="https://youtu.be/9SE222v1eyM?si=MzT1Lttu-pX3g2Uj" target="_blank" rel="noopener noreferrer" aria-label="Відкрити відео 1 на YouTube"><img class="video-thumbnail" src="https://i.ytimg.com/vi/9SE222v1eyM/hqdefault.jpg" alt="" loading="lazy"></a>
+          <a class="video-card" href="https://youtu.be/UWmHGjR3gWc?si=Dhr9DtDZAdm5vSBF" target="_blank" rel="noopener noreferrer" aria-label="Відкрити відео 2 на YouTube"><img class="video-thumbnail" src="https://i.ytimg.com/vi/UWmHGjR3gWc/hqdefault.jpg" alt="" loading="lazy"></a>
+            <a class="video-card" href="https://youtu.be/kVULAFyFzcc?si=7Nm-ToPI-vxqnDr2" target="_blank" rel="noopener noreferrer" aria-label="Відкрити відео 3 на YouTube"><img class="video-thumbnail" src="https://i.ytimg.com/vi/kVULAFyFzcc/hqdefault.jpg" alt="" loading="lazy"></a>
+          <a class="video-card" href="https://youtu.be/kRWuEnjfYTE?si=ppj3c67-FI1W51en" target="_blank" rel="noopener noreferrer" aria-label="Відкрити відео 4 на YouTube"><img class="video-thumbnail" src="https://i.ytimg.com/vi/kRWuEnjfYTE/hqdefault.jpg" alt="" loading="lazy"></a>
+        </div>
+        <div class="videos-channel-link">
+          <a class="cta" href="https://www.youtube.com/@Hrustevich" target="_blank" rel="noopener noreferrer" id="videos-channel-link">Перейти на YouTube</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const newsData = {
+      ua: [
+        {
+          date: "1 Вересня 2026",
+          title: "Сайт Олександра Хрустевича отримав новий вигляд!",
+          text: "Після 14 років цифровий простір артиста зазнав повної трансформації. Новий сучасний дизайн, покращена навігація та абсолютно свіжий погляд на подачу музичної творчості створені для того, щоб кожен шанувальник міг ще ближче доторкнутися до мистецтва баяна.",
+          img: "3.png",
+          link: "",
+          linkText: ""
+        }
+      ],
+      en: [
+        {
+          date: "September 1, 2026",
+          title: "The website of Oleksandr Khrustevych has been given a fresh new look!",
+          text: "After 14 years, the artist’s digital space has undergone a complete transformation. A modern new design, improved navigation, and a fresh approach to presenting his musical work have been created to bring every admirer even closer to the art of the button accordion.",
+          img: "3.png",
+          link: "",
+          linkText: ""
+        }
+      ]
+    };
+
+    let currentLang = 'en';
+    let activeNewsIndex = 0;
+    let activeConcertType = 'upcoming';
+    let activeConcertIndex = 0;
+
+    const concertData = {
+      ua: {
+        upcoming: [
+          {
+            title: 'Концерт у Castelfidardo, Італія',
+            date: 'П’ятниця, 11 вересня 2026',
+            text: 'Auditorium San Francesco, Castelfidardo. Початок о 18:15.',
+            img: 'Concert1Logo.png',
+            link: 'https://www.facebook.com/share/p/1F2qXVkSH7/?mibextid=wwXIfr',
+            linkText: 'Дізнатися більше'
+          },
+          {
+            title: 'Концерт у Zittau, Німеччина',
+            date: 'П’ятниця, 23 жовтня 2026',
+            text: 'Rathaus Zittau, Zittau. Початок о 19:30.',
+            img: 'Concert2Logo.png',
+            link: 'https://www.facebook.com/share/p/1EwgaMKUN9/?mibextid=wwXIfr',
+            linkText: 'Дізнатися більше'
+          }
+        ],
+        past: [
+          { title: 'Кенігштайн, Герліц, Німеччина', date: '18.08.2025', text: 'Концерт у містах Кенігштайн і Герліц, Німеччина.', img: '3.png' },
+          { title: 'Лісабон, Португалія', date: '30.05.2025', text: 'Концерт у місті Лісабон, Португалія.', img: 'Photo02.png' },
+          { title: 'Сніна, Словаччина', date: '06.06.2024', text: 'Концерт у місті Сніна, Словаччина.', img: '3.png' },
+          { title: 'Куала-Лумпур, Малайзія', date: '23.03.2024', text: 'Концерт у місті Куала-Лумпур, Малайзія.', img: 'Photo02.png' },
+          { title: 'Вільнюс, Литва', date: '14.09.2023', text: 'Концерт у місті Вільнюс, Литва.', img: '3.png' },
+          { title: 'Літомишль, Чехія', date: '03.07.2023', text: 'Концерт у місті Літомишль, Чехія.', img: 'Photo02.png' },
+          { title: 'Осло (Gol), Норвегія', date: '02.07.2023', text: 'Концерт в Осло (Gol), Норвегія.', img: '3.png' },
+          { title: 'Клостернойбург, Австрія', date: '22.03.2023', text: 'Концерт у місті Клостернойбург, Австрія.', img: 'Photo02.png' },
+          { title: 'Пафос, Кіпр', date: '13.12.2021', text: 'Концерт у місті Пафос, Кіпр.', img: '3.png' },
+          { title: 'Зноймо, Чехія', date: '16.07.2021', text: 'Концерт у місті Зноймо, Чехія.', img: 'Photo02.png' }
+        ]
+      },
+      en: {
+        upcoming: [
+          {
+            title: 'Concert in Castelfidardo, Italy',
+            date: 'Friday, September 11, 2026',
+            text: 'Auditorium San Francesco, Castelfidardo. Starts at 18:15.',
+            img: 'Concert1Logo.png',
+            link: 'https://www.facebook.com/share/p/1F2qXVkSH7/?mibextid=wwXIfr',
+            linkText: 'Learn more'
+          },
+          {
+            title: 'Concert in Zittau, Germany',
+            date: 'Friday, October 23, 2026',
+            text: 'Rathaus Zittau, Zittau. Starts at 19:30.',
+            img: 'Concert2Logo.png',
+            link: 'https://www.facebook.com/share/p/1EwgaMKUN9/?mibextid=wwXIfr',
+            linkText: 'Learn more'
+          }
+        ],
+        past: [
+          { title: 'Konigstein, Gorlitz, Germany', date: '18.08.2025', text: 'Concerts in Konigstein and Gorlitz, Germany.', img: '3.png' },
+          { title: 'Lisbon, Portugal', date: '30.05.2025', text: 'Concert in Lisbon, Portugal.', img: 'Photo02.png' },
+          { title: 'Snina, Slovakia', date: '06.06.2024', text: 'Concert in Snina, Slovakia.', img: '3.png' },
+          { title: 'Kuala Lumpur, Malaysia', date: '23.03.2024', text: 'Concert in Kuala Lumpur, Malaysia.', img: 'Photo02.png' },
+          { title: 'Vilnius, Lithuania', date: '14.09.2023', text: 'Concert in Vilnius, Lithuania.', img: '3.png' },
+          { title: 'Litomysl, Czech Republic', date: '03.07.2023', text: 'Concert in Litomysl, Czech Republic.', img: 'Photo02.png' },
+          { title: 'Oslo (Gol), Norway', date: '02.07.2023', text: 'Concert in Oslo (Gol), Norway.', img: '3.png' },
+          { title: 'Klosterneuburg, Austria', date: '22.03.2023', text: 'Concert in Klosterneuburg, Austria.', img: 'Photo02.png' },
+          { title: 'Paphos, Cyprus', date: '13.12.2021', text: 'Concert in Paphos, Cyprus.', img: '3.png' },
+          { title: 'Znojmo, Czech Republic', date: '16.07.2021', text: 'Concert in Znojmo, Czech Republic.', img: 'Photo02.png' }
+        ]
+      }
+    };
+
+    function renderNewsList() {
+      const container = document.getElementById('news-list-container');
+      const data = newsData[currentLang];
+      container.innerHTML = '';
+
+      data.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = `news-card ${index === activeNewsIndex ? 'active' : ''}`;
+        card.setAttribute('data-id', index);
+        card.innerHTML = `
+          <img class="news-card-img" src="${item.img}" alt="${item.title}">
+          <div class="news-card-info">
+            <span class="news-card-date">${item.date}</span>
+            <h3 class="news-card-title">${item.title}</h3>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          activeNewsIndex = index;
+          updateActiveNews();
+        });
+        container.appendChild(card);
+      });
+    }
+
+    function updateActiveNews() {
+      const data = newsData[currentLang][activeNewsIndex];
+      
+      const panel = document.getElementById('news-detail-panel');
+      panel.style.animation = 'none';
+      panel.offsetHeight;
+      panel.style.opacity = '1';
+      panel.style.animation = 'fadeIn 400ms ease forwards';
+
+      document.getElementById('detail-img').src = data.img;
+      document.getElementById('detail-date').textContent = data.date;
+      document.getElementById('detail-title').textContent = data.title;
+      document.getElementById('detail-text').textContent = data.text;
+      
+      const linkEl = document.getElementById('detail-link');
+      if (data.link && data.linkText) {
+        linkEl.href = data.link;
+        linkEl.textContent = data.linkText;
+        linkEl.style.display = 'inline-flex';
+      } else {
+        linkEl.style.display = 'none';
+      }
+
+      document.querySelectorAll('.news-card').forEach((card, idx) => {
+        card.classList.toggle('active', idx === activeNewsIndex);
+      });
+    }
+
+    function renderConcertList(type) {
+      const container = document.getElementById(`${type}-concerts-list`);
+      const data = concertData[currentLang][type];
+      container.innerHTML = '';
+
+      data.forEach((item, index) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = `concert-card ${type === 'past' ? 'past-concert-card' : ''} ${type === activeConcertType && index === activeConcertIndex ? 'active' : ''}`;
+        card.innerHTML = type === 'past'
+          ? `
+            <span class="concert-card-copy">
+              <span class="concert-card-title">${item.title}</span>
+              <span class="past-concert-description">${item.text}</span>
+            </span>
+          `
+          : `
+            <img class="concert-card-img" src="${item.img}" alt="">
+            <span class="concert-card-copy">
+              <span class="concert-card-date">${item.date}</span>
+              <span class="concert-card-title">${item.title}</span>
+            </span>
+          `;
+        card.addEventListener('click', () => {
+          activeConcertType = type;
+          activeConcertIndex = index;
+          updateActiveConcert();
+        });
+        container.appendChild(card);
+      });
+    }
+
+    function updateActiveConcert() {
+      const concert = concertData[currentLang][activeConcertType][activeConcertIndex];
+      const panel = document.getElementById('concert-detail-panel');
+      panel.style.animation = 'none';
+      panel.offsetHeight;
+      panel.style.opacity = '1';
+      panel.style.animation = 'fadeIn 400ms ease forwards';
+      const image = document.getElementById('concert-detail-img');
+      image.style.display = activeConcertType === 'past' ? 'none' : 'block';
+      image.src = concert.img;
+      image.alt = concert.title;
+      document.getElementById('concert-detail-date').textContent = concert.date;
+      document.getElementById('concert-detail-title').textContent = concert.title;
+      document.getElementById('concert-detail-text').textContent = concert.text;
+      const linkElement = document.getElementById('concert-detail-link');
+      if (concert.link && concert.linkText) {
+        linkElement.href = concert.link;
+        linkElement.textContent = concert.linkText;
+        linkElement.style.display = 'inline-flex';
+      } else {
+        linkElement.style.display = 'none';
+      }
+      renderConcertList('upcoming');
+      renderConcertList('past');
+    }
+
+    const translations = {
+      ua: {
+        pageTitle: 'Олександр Хрустевич | Музикант',
+        brand: 'Олександр Хрустевич',
+        aboutLink: 'Про мене',
+        musicLink: 'Новини',
+        videosLink: 'Відео',
+        videosChannelLink: 'Перейти на YouTube',
+        concertsLink: 'Концерти',
+        contactsLink: 'Контакти',
+        upcomingConcertsHeading: 'Майбутні концерти',
+        pastConcertsHeading: 'Минулі концерти',
+        contactsTitle: "Будьмо <span>на</span><br>зв'язку",
+        emailNoteText: 'Особиста електронна пошта артиста',
+        backHomeLink: 'На головну',
+        navigationLabel: 'Головна навігація',
+        aboutTitle: 'Музика, <span>що</span><br>залишається',
+        subtitles: ['Заслужений артист України', 'Лауреат міжнародних конкурсів'],
+        bioListTitle: 'Лауреат Міжнародних конкурсів:',
+        bio: [
+          "Народився 1983 року в місті Старокостянтинів Хмельницької області.",
+          "Музиці навчається з 6 років. Після закінчення Старокостянтинівської музичної школи (клас викладача Реца Л.Ф.) та Хмельницького музичного училища (клас викладача Голоднюка О.М.) у 2001-2006 рр. навчався у Національній музичній академії України імені П.І. Чайковського у класі професора, Народного артиста України Володимира Бесфамільнова. Під його керівництвом у 2009 році закінчив асистентуру-стажировку НМАУ імені П.І. Чайковського.",
+          "З 2006 року працює у Національному заслуженому академічному ансамблі танцю України імені П.П. Вірського. У 2016 році присвоєно почесне звання «Заслужений артист України».",
+          "З 2023 року працює артистом оркестру Національного заслуженого академічного українського народного хору України імені Г.Г. Верьовки.",
+          "Гастролював з концертами у містах: України, Польщі, Чехії, Австрії, Німеччині, Норвегії, Іспанії, Італії, Литві, Росії, Швейцарії, Бразилії, Голландії, Туреччині, Сербії, Португалії, Словаччині, Малайзії, Бельгії, Америці.",
+          "Останніми яскравими творчими досягненнями стали його виступи з Боббі МакФерріном, участь у Міжнародному фестивалі «Київські літні музичні вечори» та у Міжнародному літньому фестивалі «Нова музична генерація» (Вільнюс, Литва), у Міжнародному музичному фестивалі у Ньюпорті (США).",
+          "Широке визнання Олександр отримав після розміщення в інтернеті свого власного відео – на сьогодні його переглянуло вже більше 17 мільйонів користувачів зі всього світу."
+        ],
+        competitions: [
+          "«Golden Accordion» (New York, USA 3-премія);",
+          "«Грай мій баян» (Ржев, Росія 1-премія);",
+          "«Від бароко до джазу» (Вроцлав, Польща 1-премія);",
+          "«Кубок Кривбасу» (Кривий Ріг, Україна 2-премія);",
+          "«AccoHoliday» (Київ, Україна 1-премія)."
+        ]
+      },
+      en: {
+        pageTitle: 'Oleksandr Khrustevych | Musician',
+        brand: 'Oleksandr Khrustevych',
+        aboutLink: 'About me',
+        musicLink: 'News',
+        videosLink: 'Video',
+        videosChannelLink: 'Open YouTube channel',
+        concertsLink: 'Concerts',
+        contactsLink: 'Contacts',
+        upcomingConcertsHeading: 'Upcoming concerts',
+        pastConcertsHeading: 'Past concerts',
+        contactsTitle: "Let's stay <span>in</span><br>touch",
+        emailNoteText: "Artist's personal email",
+        backHomeLink: 'Back home',
+        navigationLabel: 'Main navigation',
+        aboutTitle: 'Music <span>that</span><br>remains',
+        subtitles: ['Honored Artist of Ukraine', 'Laureate of international competitions'],
+        bioListTitle: 'Laureate of international competitions:',
+        bio: [
+          "Born in 1983 in the city of Starokostyantyniv, Khmelnytskyi Region.",
+          "He has been studying music since the age of 6. After graduating from the Starokostyantyniv Music School (class of teacher L.F. Rets) and the Khmelnytskyi Music College (class of teacher O.M. Holodniuk), from 2001 to 2006 he studied at the National Music Academy of Ukraine named after P.I. Tchaikovsky in the class of Professor and People's Artist of Ukraine Volodymyr Besfamilnov. Under his guidance, he completed his assistantship-internship at the Tchaikovsky National Music Academy of Ukraine in 2009.",
+          "Since 2006, he has been working in the National Honored Academic Dance Ensemble of Ukraine named after P.P. Virsky. In 2016, he was awarded the honorary title of \"Honored Artist of Ukraine.\"",
+          "Since 2023, he has been working as an orchestral artist in the National Honored Academic Ukrainian Folk Choir of Ukraine named after G.G. Veryovka.",
+          "He has toured with concerts in Ukraine, Poland, the Czech Republic, Austria, Germany, Norway, Spain, Italy, Lithuania, Russia, Switzerland, Brazil, the Netherlands, Turkey, Serbia, Portugal, Slovakia, Malaysia, Belgium, and America.",
+          "His recent prominent creative achievements include performances with Bobby McFerrin, participation in the \"Kyiv Summer Music Evenings\" International Festival, the \"New Music Generation\" International Summer Festival (Vilnius, Lithuania), and the International Music Festival in Newport (USA).",
+          "Oleksandr gained widespread recognition after posting his own video on the internet—to date, it has been viewed by more than 17 million users worldwide."
+        ],
+        competitions: [
+          "\"Golden Accordion\" (New York, USA — 3rd prize);",
+          "\"Play My Accordion\" (Rzhev, Russia — 1st prize);",
+          "\"From Baroque to Jazz\" (Wrocław, Poland — 1st prize);",
+          "\"Kryvbas Cup\" (Kryvyi Rih, Ukraine — 2nd prize);",
+          "\"AccoHoliday\" (Kyiv, Ukraine — 1st prize)."
+        ]
+      }
+    };
+
+    function setLanguage(language) {
+      try {
+        currentLang = language;
+        const content = translations[language];
+        document.documentElement.lang = language;
+        document.title = content.pageTitle;
+        document.getElementById('about-link').textContent = content.aboutLink;
+        document.getElementById('music-link').textContent = content.musicLink;
+        document.getElementById('videos-link').textContent = content.videosLink;
+        document.getElementById('concerts-link').textContent = content.concertsLink;
+        document.getElementById('contacts-link').textContent = content.contactsLink;
+        document.getElementById('contacts-title').innerHTML = content.contactsTitle;
+        document.getElementById('email-note-text').textContent = content.emailNoteText;
+        document.getElementById('back-home-link').textContent = content.backHomeLink;
+        document.getElementById('main-navigation').setAttribute('aria-label', content.navigationLabel);
+        document.getElementById('hero-logo').src = language === 'en' ? 'LogoMenuEN.png' : 'LogoMenuUA.png';
+        document.getElementById('hero-logo').alt = language === 'en' ? 'Oleksandr Khrustevych' : 'Олександр Хрустевич';
+        document.getElementById('about-title').innerHTML = content.aboutTitle;
+        document.getElementById('sub-honor').textContent = content.subtitles[0];
+        document.getElementById('sub-laureate').textContent = content.subtitles[1];
+        document.getElementById('about-title-image').src = language === 'en' ? 'AboutMeEN.png' : 'AboutMeUA.png';
+        document.getElementById('about-title-image').alt = language === 'en' ? 'About me' : 'Про мене';
+        document.getElementById('contacts-title-image').src = language === 'en' ? 'ContactsEN.png' : 'ContactsUA.png';
+        document.getElementById('contacts-title-image').alt = language === 'en' ? 'Contacts' : 'Контакти';
+        document.getElementById('recordings-title-image').src = language === 'en' ? 'NewsEN.png' : 'NewsUA.png';
+        document.getElementById('recordings-title-image').alt = language === 'en' ? 'News' : 'Новини';
+        document.getElementById('videos-title-image').src = language === 'en' ? 'VideoEN.png' : 'VideoUA.png';
+        document.getElementById('videos-title-image').alt = language === 'en' ? 'Video' : 'Відео';
+        document.getElementById('videos-channel-link').textContent = content.videosChannelLink;
+        document.getElementById('concerts-title-image').src = language === 'en' ? 'ConcertEN.png' : 'ConcertUA.png';
+        document.getElementById('concerts-title-image').alt = language === 'en' ? 'Concerts' : 'Концерти';
+        document.getElementById('upcoming-concerts-heading').textContent = content.upcomingConcertsHeading;
+        document.getElementById('past-concerts-heading').textContent = content.pastConcertsHeading;
+
+        const musicContainer = document.getElementById('music');
+        musicContainer.innerHTML = `
+          <p>${content.bio[0]}</p>
+          <p>${content.bio[1]}</p>
+          <p>${content.bio[2]}</p>
+          <p>${content.bio[3]}</p>
+          <p><strong>${content.bioListTitle}</strong></p>
+          <ul>
+            ${content.competitions.map(item => `<li>${item}</li>`).join('')}
+          </ul>
+          <p>${content.bio[4]}</p>
+          <p>${content.bio[5]}</p>
+          <p>${content.bio[6]}</p>
+        `;
+
+        document.getElementById('en-button').classList.toggle('active', language === 'en');
+        document.getElementById('ua-button').classList.toggle('active', language === 'ua');
+        
+        renderNewsList();
+        updateActiveNews();
+        updateActiveConcert();
+      } catch (error) {
+        console.error('Error in setLanguage:', error);
+      }
+    }
+
+    document.getElementById('en-button').addEventListener('click', function() {
+      setLanguage('en');
+    });
+    document.getElementById('ua-button').addEventListener('click', function() {
+      setLanguage('ua');
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNavigation = document.getElementById('main-navigation');
+    const mobileMenuShell = document.querySelector('.mobile-menu-shell');
+
+    function setMenuState(isOpen) {
+      menuToggle.classList.toggle('is-open', isOpen);
+      mainNavigation.classList.toggle('is-open', isOpen);
+      mobileMenuShell.classList.toggle('is-open', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    menuToggle.addEventListener('click', () => {
+      setMenuState(!mainNavigation.classList.contains('is-open'));
+    });
+
+    mainNavigation.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setMenuState(false));
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!mainNavigation.contains(event.target) && !menuToggle.contains(event.target)) {
+        setMenuState(false);
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setMenuState(false);
+    });
+
+    document.documentElement.classList.add('motion-ready');
+    const animatedGroups = [
+      ['.about-titles-wrap', 'reveal-from-left'],
+      ['.about-copy', 'reveal-from-right'],
+      ['.contacts h2', 'reveal-from-left'],
+      ['.contacts-list', 'reveal-from-right'],
+      ['#recordings .news-column', 'reveal-from-left'],
+      ['#concerts .concerts-column:first-child', 'reveal-from-left'],
+      ['#concerts .concerts-column:last-child', 'reveal-from-right stagger-3']
+    ];
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          scrollObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    animatedGroups.forEach(([selector, classNames]) => {
+      document.querySelectorAll(selector).forEach((element) => {
+        element.classList.add('reveal-on-scroll', ...classNames.split(' '));
+        scrollObserver.observe(element);
+      });
+    });
+
+    setLanguage('en');
+  </script>
+</body>
+</html>
